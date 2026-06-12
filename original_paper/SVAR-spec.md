@@ -1,4 +1,3 @@
-
 **Структурная форма SVAR**
 
 $$A_0 z_t = \alpha + \sum_{i=1}^{24} A_i z_{t-i} + \varepsilon_t, \quad \varepsilon_t \sim \text{i.i.d.}, \quad \text{Cov}(\varepsilon_t) = I$$
