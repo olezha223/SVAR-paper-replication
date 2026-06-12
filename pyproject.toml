@@ -4,5 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.11"
 dependencies = [
+    "notebook>=7.5.7",
+    "openpyxl>=3.1.5",
     "statsmodels>=0.14.6",
 ]
