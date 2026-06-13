@@ -55,7 +55,7 @@ titles <- c(
   "Cumulative Effect of Oil-Market Specific Demand Shock on Real Price of Crude Oil (Russian Model v2)"
 )
 
-pdf("russian_paper_results/model_1/fig2_hist_decomp.pdf", width = 8, height = 9)
+pdf("russian_paper_results/model_2/fig2_hist_decomp.pdf", width = 8, height = 9)
 par(mfrow = c(3, 1), mar = c(3, 4, 2.5, 1))
 ylim <- range(hd[, 1:3]) * 1.1
 for (j in 1:3) {
