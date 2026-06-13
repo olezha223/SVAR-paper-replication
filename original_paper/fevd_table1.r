@@ -16,6 +16,7 @@ library(vars)
 load("original_paper_results/svar_results.RData")   # var_model
 
 HORIZONS <- c(1, 2, 3, 12)
+H_INF    <- 500
 
 # --- 1. FEVD (Холецкий внутри, как и в irf(ortho = TRUE)) -----
 fe <- fevd(var_model, n.ahead = H_INF)$r            # H_INF x K, доли
