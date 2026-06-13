@@ -15,8 +15,11 @@ library(vars)
 df <- read_excel("original_data/processed/DATASET-extended.xlsx")
 
 # Порядок переменных строго как в уравнении (2) статьи
-yt <- as.matrix(df[, c("delta_world", "rea_t", "rpo", "inflation")])
-colnames(yt) <- c("delta_prod", "rea", "rpo", "inflation")
+
+# Возможные варианты: 'gold', 'autos', 'rtail', 'oil_industry'
+var_name <- "oil_industry"   # <--- МЕНЯЙТЕ ЗДЕСЬ НАЗВАНИЕ ПЕРЕМЕННОЙ
+yt <- as.matrix(df[, c("delta_world", "rea_t", "rpo", var_name)])
+colnames(yt) <- c("delta_prod", "rea", "rpo", var_name)
 
 stopifnot(!anyNA(yt))
 cat("Наблюдений:", nrow(yt), "\n")
@@ -33,5 +36,8 @@ print(round(P, 4))
 
 # --- 4. Сохранение --------------------------------------------
 dir.create("original_paper_results", showWarnings = FALSE)
-save(var_model, file = "original_paper_results/svar_results-v2.RData")
-cat("\nСохранено: original_paper_results/svar_results-v2.RData\n")
+industry_dir <- file.path("original_paper_results", "industry_results")
+dir.create(industry_dir, showWarnings = FALSE, recursive = TRUE)
+output_file <- file.path(industry_dir, paste0(var_name, ".RData"))
+save(var_model, file = output_file)
+cat("\nСохранено")
