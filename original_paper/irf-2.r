@@ -1,49 +1,35 @@
-# ============================================================
-#  Kilian & Park (2009) — импульсные отклики
-#
-#  Исправления относительно прежней версии:
-#   1. ortho = TRUE на reduced-form VAR -> one-SD шоки (Холецкий)
-#   2. cumulative только для доходностей (Fig 3);
-#      отклик цены нефти (Fig 1) НЕ кумулируется — rpo уже в уровнях
-#   3. supply shock нормирован как отрицательный (production
-#      disruption): отклики * (-1), границы интервалов меняются местами
-# ============================================================
-
 library(vars)
 
-load("original_paper_results/svar_results.RData")  # var_model
+load("original_paper_results/svar_results.RData")
 
-H      <- 15
-RUNS   <- 2000
+H <- 15
+RUNS  <- 2000
 SHOCKS <- c("delta_prod", "rea", "rpo")
 
 shock_labels <- c(
   delta_prod = "Oil supply shock",
-  rea        = "Aggregate demand shock",
-  rpo        = "Oil-specific demand shock"
+  rea = "Aggregate demand shock",
+  rpo = "Oil-specific demand shock"
 )
 
-# --- 1. Bootstrap IRF -----------------------------------------
-# ci = 0.682 ~ +-1 SE, ci = 0.954 ~ +-2 SE
 get_irf <- function(response, cumulative, ci) {
   set.seed(42)
   irf(var_model,
-      impulse    = SHOCKS,
-      response   = response,
-      n.ahead    = H,
-      ortho      = TRUE,
-      boot       = TRUE,
-      ci         = ci,
-      runs       = RUNS,
+      impulse = SHOCKS,
+      response = response,
+      n.ahead = H,
+      ortho = TRUE,
+      boot = TRUE,
+      ci = ci,
+      runs = RUNS,
       cumulative = cumulative)
 }
 
-# --- 2. Извлечение одного отклика с нормировкой знака ---------
 extract <- function(irf_obj, shock, response) {
   m  <- irf_obj$irf[[shock]][,   response]
   lo <- irf_obj$Lower[[shock]][, response]
   hi <- irf_obj$Upper[[shock]][, response]
-  if (shock == "delta_prod") {            # знак: negative supply shock
+  if (shock == "delta_prod") {
     m   <- -m
     tmp <- lo
     lo  <- -hi
@@ -52,7 +38,6 @@ extract <- function(irf_obj, shock, response) {
   list(mean = m, lo = lo, hi = hi)
 }
 
-# --- 3. Панель в стиле статьи ---------------------------------
 plot_panel <- function(b1, b2, title, ylab) {
   h    <- 0:H
   ylim <- range(b1$mean, b2$lo, b2$hi)
@@ -60,9 +45,9 @@ plot_panel <- function(b1, b2, title, ylab) {
   plot(h, b1$mean, type = "l", lwd = 1.5, ylim = ylim,
        xlab = "Months", ylab = ylab, main = title, bty = "l", xaxs = "i")
   abline(h = 0, col = "grey60", lwd = 0.8)
-  lines(h, b2$lo, lty = 3)                 # +-2 SE
+  lines(h, b2$lo, lty = 3)
   lines(h, b2$hi, lty = 3)
-  lines(h, b1$lo, lty = 2)                 # +-1 SE
+  lines(h, b1$lo, lty = 2)
   lines(h, b1$hi, lty = 2)
   lines(h, b1$mean, lwd = 1.5)
 }
@@ -82,14 +67,12 @@ make_figure <- function(response, cumulative, ylab, file, main) {
   cat("Сохранено:", file, "\n")
 }
 
-# --- 4. Figure 1: отклик реальной цены нефти (НЕ кумулятивный)
 make_figure("rpo", cumulative = FALSE,
             ylab = "Real price of oil",
-            file = "irf_fig1_rpo.pdf",
+            file = "original_paper_results/irf_fig1_rpo.pdf",
             main = "Figure 1. Responses of the Real Price of Crude Oil")
 
-# --- 5. Figure 3: кумулятивный отклик реальных доходностей ----
 make_figure("r", cumulative = TRUE,
             ylab = "Cumulative Real Stock Returns (%)",
-            file = "irf_fig3_stocks.pdf",
+            file = "original_paper_results/irf_fig3_stocks.pdf",
             main = "Figure 3. Cumulative Responses of U.S. Real Stock Returns")
