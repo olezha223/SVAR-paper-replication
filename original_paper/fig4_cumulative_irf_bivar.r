@@ -24,11 +24,11 @@ irf1 <- get_irf(0.682)
 irf2 <- get_irf(0.954)
 
 h <- 0:H
-y_mean <- irf1$irf[["rpo"]][,   "r"]
-y_lo1  <- irf1$Lower[["rpo"]][, "r"]
-y_hi1  <- irf1$Upper[["rpo"]][, "r"]
-y_lo2  <- irf2$Lower[["rpo"]][, "r"]
-y_hi2  <- irf2$Upper[["rpo"]][, "r"]
+y_mean <- irf1$irf[["rpo"]][, "r"]
+y_lo1 <- irf1$Lower[["rpo"]][, "r"]
+y_hi1 <- irf1$Upper[["rpo"]][, "r"]
+y_lo2 <- irf2$Lower[["rpo"]][, "r"]
+y_hi2 <- irf2$Upper[["rpo"]][, "r"]
 
 ylim <- range(y_mean, y_lo2, y_hi2)
 ylim <- ylim + diff(ylim) * c(-0.1, 0.1)
@@ -39,12 +39,14 @@ par(mar = c(4, 4, 3, 1))
 plot(
   h,
   y_mean,
-  type = "l", lwd = 1.5,
+  type = "l",
+  lwd = 1.5,
   ylim = ylim,
   xlab = "Months",
-  ylab = "Cumulative Real Stock Returns (Percent)",
+  ylab = "Cumulative Real Stock Returns (%)",
   main = "Real oil price shock",
-  bty  = "l", xaxs = "i"
+  bty = "l",
+  xaxs = "i"
 )
 
 abline(h = 0, col = "grey60", lwd = 0.8)

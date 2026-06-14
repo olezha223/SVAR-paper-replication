@@ -8,10 +8,12 @@ H_INF <- 500
 fe <- fevd(var_model, n.ahead = H_INF)$r
 
 tab <- fe[c(HORIZONS, H_INF), ] * 100
-colnames(tab) <- c("Oil Supply Shock",
-                   "Aggregate Demand Shock",
-                   "Oil-specific Demand Shock",
-                   "Other Shocks")
+colnames(tab) <- c(
+  "Oil Supply Shock",
+  "Aggregate Demand Shock",
+  "Oil-specific Demand Shock",
+  "Other Shocks"
+)
 rownames(tab) <- c(HORIZONS, "Inf")
 
 # проверим, что на большом горизонте сходятся результаты
@@ -19,4 +21,4 @@ stopifnot(max(abs(fe[400, ] - fe[H_INF, ])) < 1e-4)
 
 # полученная таблица
 print(round(tab, 2))
-write.csv(round(tab, 2), "original_paper_resuts/table1_fevd_stock_returns.csv")
+write.csv(round(tab, 2), "original_paper_results/table1_fevd_stock_returns.csv")

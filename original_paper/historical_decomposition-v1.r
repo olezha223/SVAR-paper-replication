@@ -22,7 +22,7 @@ Phi_a <- Phi(var_model, nstep = n - 1)
 
 th <- matrix(NA_real_, n, K)
 for (s in 0:(n - 1)) {
-  th[s + 1, ] <- (Phi_a[, , s + 1] %*% P)[rpo_i, ]
+  th[s + 1, ] <- (Phi_a[,, s + 1] %*% P)[rpo_i, ]
 }
 
 hd <- matrix(0, n, K)
@@ -43,13 +43,22 @@ titles <- c(
   "Cumulative Effect of Oil-Market Specific Demand Shock on Real Price of Crude Oil"
 )
 
-pdf("original_paper_results/hd_fig2_rpo.pdf", width = 8, height = 9)
+pdf("original_paper_results/hd_fig2_rpo.pdf", width = 8, height = 6)
 par(mfrow = c(3, 1), mar = c(3, 4, 2.5, 1))
 ylim <- range(hd[, 1:3]) * 1.1
 for (j in 1:3) {
-  plot(dates, hd[, j], type = "l", lwd = 1.2,
-       ylim = ylim, xlab = "", ylab = "Percent",
-       main = titles[j], cex.main = 0.95, bty = "l")
+  plot(
+    dates,
+    hd[, j],
+    type = "l",
+    lwd = 1.2,
+    ylim = ylim,
+    xlab = "",
+    ylab = "Percent",
+    main = titles[j],
+    cex.main = 0.95,
+    bty = "l"
+  )
   abline(h = 0, col = "grey60", lwd = 0.8)
 }
 dev.off()
