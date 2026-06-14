@@ -14,4 +14,12 @@ var_model <- VAR(yt, p = 24, type = "const")
 P <- t(chol(summary(var_model)$covres))
 print(round(P, 4))
 
-save(var_model, file = "russian_paper_results/model_2/svar_results.RData")
+model_id <- "model_2"
+supply_source <- "delta_non_rus"
+
+save(
+  var_model,
+  model_id,
+  supply_source,
+  file = "russian_paper_results/model_2/svar_results.RData"
+)

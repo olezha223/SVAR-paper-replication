@@ -21,3 +21,4 @@ print(round(P, 4))
 industry_dir <- file.path("russian_paper_results", "industry_results")
 output_file <- file.path(industry_dir, paste0(var_name, ".RData"))
 save(var_model, file = output_file)
+
