@@ -1,0 +1,2 @@
+"variable","specification","selectlags","lag_used","T_obs","tau_stat","cv_1pct","cv_5pct","cv_10pct","reject_1pct","reject_5pct","reject_10pct"
+"rea_t","drift","BIC",5,180,-2.4855,-3.46,-2.88,-2.57,FALSE,FALSE,FALSE

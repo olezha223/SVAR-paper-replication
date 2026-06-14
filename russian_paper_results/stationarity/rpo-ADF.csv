@@ -1,0 +1,2 @@
+"variable","specification","selectlags","lag_used","T_obs","tau_stat","cv_1pct","cv_5pct","cv_10pct","reject_1pct","reject_5pct","reject_10pct"
+"rpo","trend","BIC",5,180,-2.7916,-3.99,-3.43,-3.13,FALSE,FALSE,FALSE
