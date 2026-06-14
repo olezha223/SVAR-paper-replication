@@ -23,10 +23,9 @@ shock_labels <- c(
 
 # Отрасли: имя переменной -> подпись на графике
 industries <- c(
-  oil_industry = "Petroleum & Natural Gas",
-  autos        = "Automobiles & Trucks",
-  rtail        = "Retail",
-  gold         = "Precious Metals"
+  oil_gas_log_return      = "Oil & Gas",
+  metals_mining_log_return = "Metals & Mining",
+  consumer_log_return      = "Consumer Goods"
 )
 
 # --- 1. Bootstrap IRF для одной модели -----------------------
@@ -96,7 +95,7 @@ for (var_name in names(industries)) {
 
 # --- 5. Figure 6: 3 строки (шоки) × 4 столбца (отрасли) -----
 pdf("fig6_industry_irf.pdf", width = 14, height = 10)
-par(mfrow = c(3, 4),
+par(mfrow = c(3, 3),
     mar   = c(3.5, 3.5, 2.5, 1),
     oma   = c(1, 1, 2.5, 0))
 
@@ -113,7 +112,7 @@ for (sh in SHOCKS) {
   }
 }
 
-mtext("Figure 6. Cumulative Responses of U.S. Real Stock Returns by Industry\nwith One- and Two-Standard Error Bands",
+mtext("Figure 6. Cumulative Responses of Russian Real Stock Returns by Industry\nwith One- and Two-Standard Error Bands",
       outer = TRUE, font = 2, cex = 1)
 dev.off()
 cat("\nСохранено: fig6_industry_irf.pdf\n")
