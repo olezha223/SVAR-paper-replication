@@ -27,15 +27,15 @@ inf_name <- colnames(m_inf$y)[K]
 cond_cov <- function(fit_r, fit_p) {
   Pr <- Psi(fit_r, nstep = H)
   Pp <- Psi(fit_p, nstep = H)
-  r_imp  <- Pr[K, 1:3, ]
+  r_imp <- Pr[K, 1:3, ]
   pi_imp <- Pp[K, 1:3, ]
   r_imp * pi_imp
 }
 C_hat <- cond_cov(m_ret, m_inf)
 
 sim_var <- function(fit, eta) {
-  A  <- Bcoef(fit)
-  E  <- residuals(fit) * eta
+  A <- Bcoef(fit)
+  E <- residuals(fit) * eta
   y0 <- fit$y
   ys <- matrix(NA_real_, p + n, K, dimnames = list(NULL, colnames(fit$y)))
   ys[1:p, ] <- y0[1:p, ]
@@ -49,8 +49,8 @@ sim_var <- function(fit, eta) {
 C_boot <- array(NA_real_, c(RUNS, 3, H + 1))
 for (b in 1:RUNS) {
   eta <- rnorm(n)
-  fr  <- VAR(sim_var(m_ret, eta), p = p, type = "const")
-  fp  <- VAR(sim_var(m_inf, eta), p = p, type = "const")
+  fr <- VAR(sim_var(m_ret, eta), p = p, type = "const")
+  fp <- VAR(sim_var(m_inf, eta), p = p, type = "const")
   C_boot[b, , ] <- cond_cov(fr, fp)
   if (b %% 100 == 0) cat("bootstrap:", b, "/", RUNS, "\n")
 }
@@ -67,7 +67,7 @@ titles <- c(
 
 pdf("original_paper_results/fig5_conditional_covariance.pdf", width = 10, height = 3.5)
 par(mfrow = c(1, 3), mar = c(4, 4, 3, 1))
-h    <- 0:H
+h <- 0:H
 ylim <- range(C_hat, lo90, hi90) * 1.1
 for (j in 1:3) {
   plot(h, C_hat[j, ], type = "l", lwd = 1.5, ylim = ylim,

@@ -2,52 +2,52 @@ library(vars)
 
 industry_dir <- file.path("original_paper_results", "industry_results")
 
-H    <- 15
+H <- 15
 RUNS <- 2000
 
 SHOCKS <- c("delta_prod", "rea", "rpo")
 shock_labels <- c(
   delta_prod = "Oil supply shock",
-  rea        = "Aggregate demand shock",
-  rpo        = "Oil-specific demand shock"
+  rea = "Aggregate demand shock",
+  rpo = "Oil-specific demand shock"
 )
 
 # подписи на графиках
 industries <- c(
   oil_industry = "Petroleum & Natural Gas",
-  autos        = "Automobiles & Trucks",
-  rtail        = "Retail",
-  gold         = "Precious Metals"
+  autos = "Automobiles & Trucks",
+  rtail = "Retail",
+  gold = "Precious Metals"
 )
 
 get_irf <- function(var_model, response, ci) {
   set.seed(42)
   irf(var_model,
-      impulse    = SHOCKS,
-      response   = response,
-      n.ahead    = H,
-      ortho      = TRUE,
-      boot       = TRUE,
-      ci         = ci,
-      runs       = RUNS,
+      impulse = SHOCKS,
+      response = response,
+      n.ahead = H,
+      ortho = TRUE,
+      boot = TRUE,
+      ci = ci,
+      runs = RUNS,
       cumulative = TRUE)
 }
 
 extract <- function(irf_obj, shock, response) {
-  m  <- irf_obj$irf[[shock]][,   response]
+  m <- irf_obj$irf[[shock]][, response]
   lo <- irf_obj$Lower[[shock]][, response]
   hi <- irf_obj$Upper[[shock]][, response]
   if (shock == "delta_prod") {
-    m   <- -m
+    m <- -m
     tmp <- lo; lo <- -hi; hi <- -tmp
   }
   list(mean = m, lo = lo, hi = hi)
 }
 
 plot_panel <- function(b1, b2, title, ylab = "") {
-  h    <- 0:H
+  h <- 0:H
   ylim <- range(b1$mean, b2$lo, b2$hi, na.rm = TRUE)
-  pad  <- diff(ylim) * 0.12
+  pad <- diff(ylim) * 0.12
   ylim <- ylim + c(-pad, pad)
 
   plot(h, b1$mean,
@@ -81,8 +81,8 @@ for (var_name in names(industries)) {
 
 pdf("original_paper_resuts/fig6_industry_irf.pdf", width = 14, height = 10)
 par(mfrow = c(3, 4),
-    mar   = c(3.5, 3.5, 2.5, 1),
-    oma   = c(1, 1, 2.5, 0))
+    mar = c(3.5, 3.5, 2.5, 1),
+    oma = c(1, 1, 2.5, 0))
 
 for (sh in SHOCKS) {
   for (var_name in names(industries)) {
@@ -90,7 +90,7 @@ for (sh in SHOCKS) {
     b2 <- extract(irf2_list[[var_name]], sh, var_name)
 
     title <- industries[var_name]
-    ylab  <- if (var_name == names(industries)[1]) shock_labels[sh] else ""
+    ylab <- if (var_name == names(industries)[1]) shock_labels[sh] else ""
 
     plot_panel(b1, b2, title = title, ylab = ylab)
   }

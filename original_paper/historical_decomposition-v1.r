@@ -4,11 +4,11 @@ library(vars)
 load("original_paper_results/svar_results.RData")
 df <- read_excel("original_data/processed/DATASET.xlsx")
 
-K   <- var_model$K
-p   <- var_model$p
-E   <- residuals(var_model)
-n   <- nrow(E)
-P   <- t(chol(summary(var_model)$covres))
+K <- var_model$K
+p <- var_model$p
+E <- residuals(var_model)
+n <- nrow(E)
+P <- t(chol(summary(var_model)$covres))
 eps <- E %*% t(solve(P))
 colnames(eps) <- c("supply", "agg_demand", "oil_specific", "other")
 

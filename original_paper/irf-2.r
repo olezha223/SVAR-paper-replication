@@ -3,7 +3,7 @@ library(vars)
 load("original_paper_results/svar_results.RData")
 
 H <- 15
-RUNS  <- 2000
+RUNS <- 2000
 SHOCKS <- c("delta_prod", "rea", "rpo")
 
 shock_labels <- c(
@@ -26,20 +26,20 @@ get_irf <- function(response, cumulative, ci) {
 }
 
 extract <- function(irf_obj, shock, response) {
-  m  <- irf_obj$irf[[shock]][,   response]
+  m <- irf_obj$irf[[shock]][, response]
   lo <- irf_obj$Lower[[shock]][, response]
   hi <- irf_obj$Upper[[shock]][, response]
   if (shock == "delta_prod") {
-    m   <- -m
+    m <- -m
     tmp <- lo
-    lo  <- -hi
-    hi  <- -tmp
+    lo <- -hi
+    hi <- -tmp
   }
   list(mean = m, lo = lo, hi = hi)
 }
 
 plot_panel <- function(b1, b2, title, ylab) {
-  h    <- 0:H
+  h <- 0:H
   ylim <- range(b1$mean, b2$lo, b2$hi)
   ylim <- ylim + diff(ylim) * c(-0.1, 0.1)
   plot(h, b1$mean, type = "l", lwd = 1.5, ylim = ylim,

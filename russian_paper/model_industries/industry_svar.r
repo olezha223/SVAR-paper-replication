@@ -1,11 +1,10 @@
 library(readxl)
 library(vars)
 
-# --- 1. Данные ------------------------------------------------
 df <- read_excel("russian_data/processed/DATASET-industries.xlsx")
 
 # Возможные варианты: consumer_log_return,metals_mining_log_return,oil_gas_log_return
-var_name <- "oil_gas_log_return"   # <--- МЕНЯЙТЕ ЗДЕСЬ НАЗВАНИЕ ПЕРЕМЕННОЙ
+var_name <- "oil_gas_log_return"   # МЕНЯТЬ ЗДЕСЬ НАЗВАНИЕ ПЕРЕМЕННОЙ
 df[[var_name]] <- df[[var_name]] * 100
 
 yt <- as.matrix(df[, c("delta_non_rus", "rea_t", "rpo", var_name)])
@@ -17,7 +16,6 @@ cat("Наблюдений:", nrow(yt), "\n")
 var_model <- VAR(yt, p = 24, type = "const")
 
 P <- t(chol(summary(var_model)$covres))
-cat("\nИмпакт-матрица (one-SD шоки):\n")
 print(round(P, 4))
 
 industry_dir <- file.path("russian_paper_results", "industry_results")

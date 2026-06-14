@@ -5,7 +5,7 @@ load("russian_paper_results/model_2/svar_results.RData")
 HORIZONS <- c(1, 2, 3, 12)
 H_INF <- 500
 
-fe <- fevd(var_model, n.ahead = H_INF)$r            # H_INF x K, доли
+fe <- fevd(var_model, n.ahead = H_INF)$r
 
 tab <- fe[c(HORIZONS, H_INF), ] * 100
 colnames(tab) <- c("Oil Supply Shock",

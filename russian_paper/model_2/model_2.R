@@ -12,8 +12,6 @@ cat("Наблюдений:", nrow(yt), "\n")
 var_model <- VAR(yt, p = 24, type = "const")
 
 P <- t(chol(summary(var_model)$covres))
-cat("\nИмпакт-матрица (one-SD шоки):\n")
 print(round(P, 4))
 
 save(var_model, file = "russian_paper_results/model_2/svar_results.RData")
-cat("\nСохранено: russian_paper_results/svar_results.RData\n")
