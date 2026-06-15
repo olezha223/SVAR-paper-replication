@@ -1,0 +1,6 @@
+"variable","specification","selectlags","lag_used","T_obs","tau_stat","cv_1pct","cv_5pct","cv_10pct","reject_1pct","reject_5pct","reject_10pct"
+"delta_non_rus","drift","BIC",4,84,-6.9735,-3.51,-2.89,-2.58,TRUE,TRUE,TRUE
+"IGREA","drift","BIC",4,84,-2.284,-3.51,-2.89,-2.58,FALSE,FALSE,FALSE
+"ret_t","drift","BIC",4,84,-7.6185,-3.51,-2.89,-2.58,TRUE,TRUE,TRUE
+"rpo","trend","BIC",4,84,-2.5189,-4.04,-3.45,-3.15,FALSE,FALSE,FALSE
+"rub_diff","drift","BIC",4,84,-8.3325,-3.51,-2.89,-2.58,TRUE,TRUE,TRUE
