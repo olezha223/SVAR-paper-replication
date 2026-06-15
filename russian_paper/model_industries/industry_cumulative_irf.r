@@ -153,9 +153,15 @@ for (var_name in names(industries)) {
 pdf(
   "russian_paper_results/industry_results/fig6_industry_irf.pdf",
   width = 14,
-  height = 10
+  height = 12
 )
-par(mfrow = c(3, 3), mar = c(3.5, 3.5, 2.5, 1), oma = c(1, 1, 2.5, 0))
+par(
+  mfrow = c(3, 3),
+  mar = c(4.5, 5.5, 3, 1),
+  oma = c(0.5, 0.5, 1.5, 0),
+  mgp = c(3.2, 0.8, 0),
+  tcl = -0.25
+)
 
 for (sh in SHOCKS) {
   for (var_name in names(industries)) {
